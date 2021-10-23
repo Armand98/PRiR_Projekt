@@ -13,7 +13,7 @@
 std::vector<int> getSelectedNumbers(int lowerLimit, int upperLimit, int minimalDigitsSum)
 {
     std::vector<int> selectedNumbers;
-    double time = omp_get_wtime();
+    //double time = omp_get_wtime();
 
     for (int i = lowerLimit; i <= upperLimit; i++)
     {
@@ -26,14 +26,26 @@ std::vector<int> getSelectedNumbers(int lowerLimit, int upperLimit, int minimalD
         if (actualDigitsSum > minimalDigitsSum)
             selectedNumbers.push_back(i);
     }
-    double measuredTime = omp_get_wtime() - time;
-    std::cout << "Czas tworzenia zbioru danych: " << measuredTime << std::endl;
+
+    //double measuredTime = omp_get_wtime() - time;
+    //std::cout << "Czas tworzenia zbioru danych: " << measuredTime << std::endl;
+
     return selectedNumbers;
+}
+
+std::vector<int> inRange(int lowerLimit, int upperLimit)
+{
+    std::vector<int> numbers;
+
+    for (int i = lowerLimit; i <= upperLimit; i++)
+        numbers.push_back(i);
+
+    return numbers;
 }
 
 double getAverege(std::vector<int> numbers)
 {
-    int sum = 0;
+    unsigned long sum = 0;
     int quantity = 0;
 
     double time = omp_get_wtime();
@@ -46,18 +58,53 @@ double getAverege(std::vector<int> numbers)
 
     double measuredTime = omp_get_wtime() - time;
 
-    std::cout << "Czas liczenia sredniej arytmetycznej: " << measuredTime << std::endl;
+    std::cout << "Czas liczenia sredniej arytmetycznej przygotowanego juz zbioru danych: " << measuredTime << std::endl;
+
+    return (double)sum / (double)quantity;
+}
+
+double getAveregeWithValidation(std::vector<int> numbers, int lowerLimit, int upperLimit, int minimalDigitsSum)
+{
+    unsigned long sum = 0;
+    int quantity = 0;
+
+    double time = omp_get_wtime();
+
+    for (int number : numbers)
+    {
+        if (number >= lowerLimit && number <= upperLimit) 
+        {
+            std::string strNumber = std::to_string(number);
+            int actualDigitsSum = 0;
+
+            for (char digit : strNumber)
+                actualDigitsSum += digit - '0';
+
+            if (actualDigitsSum > minimalDigitsSum)
+            {
+                sum += number;
+                quantity++;
+            }
+        }
+    }
+
+    double measuredTime = omp_get_wtime() - time;
+
+    std::cout << "Czas liczenia sredniej arytmetycznej z walidacja danych wejsciowych: " << measuredTime << std::endl;
 
     return (double)sum / (double)quantity;
 }
 
 int main()
 {
-    int lowerLimit = 10000;
-    int upperLimit = 100000;
+    int lowerLimit = 1000;
+    int upperLimit = 2000000;
     int minimalDigitsSum = 15;
 
-    std::vector<int> dataset = getSelectedNumbers(lowerLimit, upperLimit, minimalDigitsSum);
+    std::vector<int> dataset1 = getSelectedNumbers(lowerLimit, upperLimit, minimalDigitsSum);
+    std::vector<int> dataset2 = inRange(lowerLimit, upperLimit);
 
-    std::cout << "Srednia arytmetyczna zadanego zbioru danych wynosi: " << getAverege(dataset) << std::endl;
+    std::cout << "(1) Srednia arytmetyczna bez walidacji: " << getAverege(dataset1) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(2) Srednia arytmetyczna z walidacja: " << getAveregeWithValidation(dataset2, lowerLimit, upperLimit, minimalDigitsSum) << std::endl;
 }
