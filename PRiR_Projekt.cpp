@@ -63,16 +63,19 @@ double getAverege(std::vector<int> numbers)
     return (double)sum / (double)quantity;
 }
 
-double getAveregeWithValidation(std::vector<int> numbers, int lowerLimit, int upperLimit, int minimalDigitsSum)
+double getAveregeWithValidationParallel(std::vector<int> numbers, int lowerLimit, int upperLimit, int minimalDigitsSum, int threads = 1)
 {
     unsigned long sum = 0;
     int quantity = 0;
 
     double time = omp_get_wtime();
+    int numbers_size = numbers.size();
 
-    for (int number : numbers)
+#pragma omp parallel for reduction(+:sum,quantity) num_threads(threads)
+    for (int index = 0; index < numbers_size; index++)
     {
-        if (number >= lowerLimit && number <= upperLimit) 
+        int number = numbers[index];
+        if (number >= lowerLimit && number <= upperLimit)
         {
             std::string strNumber = std::to_string(number);
             int actualDigitsSum = 0;
@@ -87,57 +90,18 @@ double getAveregeWithValidation(std::vector<int> numbers, int lowerLimit, int up
             }
         }
     }
-
-    double measuredTime = omp_get_wtime() - time;
-
-    std::cout << "Czas liczenia sredniej arytmetycznej z walidacja danych wejsciowych: " << measuredTime << std::endl;
-
-    return (double)sum / (double)quantity;
-}
-
-double getAveregeWithValidationParallel(std::vector<int> numbers, int lowerLimit, int upperLimit, int minimalDigitsSum)
-{
-    unsigned long sum = 0;
-    int quantity = 0;
-
-    double time = omp_get_wtime();
-    int numbers_size = numbers.size();
-
-    // Ta petla rownolegla wcale nie wykonuje sie szybciej wiec to jest jeszcze do poprawy
-    #pragma omp parallel num_threads(8)
-    {
-        #pragma omp for
-        for (int index = 0; index < numbers_size; index++)
-        {
-            int number = numbers[index];
-            if (number >= lowerLimit && number <= upperLimit)
-            {
-                std::string strNumber = std::to_string(number);
-                int actualDigitsSum = 0;
-
-                for (char digit : strNumber)
-                    actualDigitsSum += digit - '0';
-
-                if (actualDigitsSum > minimalDigitsSum)
-                {
-                    sum += number;
-                    quantity++;
-                }
-            }
-        }
-    }
     
 
     double measuredTime = omp_get_wtime() - time;
 
-    std::cout << "Czas liczenia sredniej arytmetycznej z walidacja danych wejsciowych: " << measuredTime << std::endl;
+    std::cout << "Czas liczenia sredniej arytmetycznej z walidacja danych wejsciowych przy uzyciu " << threads << " watkow wynosi: " << measuredTime << std::endl;
 
     return (double)sum / (double)quantity;
 }
 
 int main()
 {
-    int lowerLimit = 1000;
+    int lowerLimit = 0;
     int upperLimit = 2000000;
     int minimalDigitsSum = 15;
 
@@ -148,7 +112,17 @@ int main()
 
     std::cout << "(1) Srednia arytmetyczna bez walidacji: " << getAverege(dataset1) << std::endl;
     std::cout << "--------------------------------------------------------------------------------" << std::endl;
-    std::cout << "(2) Srednia arytmetyczna z walidacja: " << getAveregeWithValidation(dataset2, lowerLimit, upperLimit, minimalDigitsSum) << std::endl;
+    std::cout << "(2) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum) << std::endl;
     std::cout << "--------------------------------------------------------------------------------" << std::endl;
-    std::cout << "(3) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidation(dataset2, lowerLimit, upperLimit, minimalDigitsSum) << std::endl;
+    std::cout << "(3) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 2) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(4) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 4) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(5) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 6) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(6) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 8) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(7) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 10) << std::endl;
+    std::cout << "--------------------------------------------------------------------------------" << std::endl;
+    std::cout << "(8) (Parallel) Srednia arytmetyczna z walidacja: " << getAveregeWithValidationParallel(dataset2, lowerLimit, upperLimit, minimalDigitsSum, 12) << std::endl;
 }
