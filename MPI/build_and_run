@@ -1,0 +1,4 @@
+file_name=$1
+mpicc "$file_name".c -o "$file_name"
+mpirun -np $2 --display-map --oversubscribe "./$file_name"
+
