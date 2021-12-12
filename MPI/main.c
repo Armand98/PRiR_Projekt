@@ -4,20 +4,25 @@
 #include <time.h>
 #include <math.h>
 
-int QUANTITY_IN_DATASET = 500000;
+int QUANTITY_IN_DATASET = 2000000;
 
 int MAIN_PLOT_RANK = 0;
 
 void fillArrayWithRandomNumbers(int * array, int minNumber, int maxNumber){
     srand(time(NULL));
 
-    for(int i =0;i<QUANTITY_IN_DATASET;i++){
-        array[i] = rand() %(maxNumber*10) + minNumber;
+    int minimalValueInDataset = 1;
+    int maximalValueInDataset = 10000000;
+    int quantityOfDataset = 5000000;
+
+    for(unsigned long int i =0;i<QUANTITY_IN_DATASET;i++){
+        int random = rand();
+        array[i] = (abs(random)+minNumber)%maxNumber;
     }
 }
 
 int sumDigitsInNumber(int number){
-    int sum = 0;
+    unsigned long sum = 0;
     while(number!=0){
         sum+=number%10;
         number/=10;
@@ -33,9 +38,9 @@ int main(int argc, char **argv) {
     float resultToSend, resultToReceive;
 
     int  minNumber,  maxNumber, minSumOfDigits;
-    minNumber=0;
-    maxNumber=1000;
-    minSumOfDigits=0;
+    minNumber=1000;
+    maxNumber=2000000;
+    minSumOfDigits=15;
 
     double start, end;
 
@@ -57,6 +62,7 @@ int main(int argc, char **argv) {
             MPI_Send(&dataset,QUANTITY_IN_DATASET,MPI_INT,i,tag,MPI_COMM_WORLD);
 
         }
+
         for(int i = MAIN_PLOT_RANK+1;i<plotsAmount;i++){
             MPI_Recv(&resultToReceive,QUANTITY_IN_DATASET,MPI_INT,i,tag,MPI_COMM_WORLD,&status);
             sumOfAllPlots+=resultToReceive;
@@ -69,8 +75,7 @@ int main(int argc, char **argv) {
         end = MPI_Wtime();
 
 
-        printf("Czas realizacji dla %d watkow : %f\n",plotsAmount, end-start);
-        printf("Wynik działania dla przedziału <%d,%d> o minimalnej sumie liczb %d: %f\n",minNumber, maxNumber,minSumOfDigits,resultFromAllPlots);
+        printf("ForGrep%f\n", (end-start)/1000);
     } else {
         int plotSize = ceil(QUANTITY_IN_DATASET/(plotsAmount-1));
         int sumInPlot = 0;

@@ -1,0 +1,64 @@
+echo "" > result.txt
+mpirun -np 2 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 4 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 6 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 8 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 10 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 12 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 14 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 16 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 18 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 20 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+
+echo "" >> result.txt
+
+mpirun -np 2 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 4 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 6 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 8 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 10 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 12 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 14 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 16 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 18 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 20 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+
+echo "" >> result.txt
+
+mpirun -np 2 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 4 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 6 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 8 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 10 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 12 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 14 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 16 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 18 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 20 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+
+echo "" >> result.txt
+
+mpirun -np 2 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 4 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 6 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 8 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 10 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 12 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 14 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 16 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 18 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 20 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+
+echo "" >> result.txt
+
+mpirun -np 2 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 4 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 6 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 8 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 10 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 12 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 14 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 16 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 18 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+mpirun -np 20 --display-map --oversubscribe "./main"|grep "ForGrep" >> result.txt
+

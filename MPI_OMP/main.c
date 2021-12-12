@@ -5,22 +5,27 @@
 #include <math.h>
 #include <omp.h>
 
-#define PLOTS 4
+#define PLOTS 6
 
-long long int QUANTITY_IN_DATASET = 1000000*2;
+int QUANTITY_IN_DATASET = 2000000;
 
 int MAIN_PLOT_RANK = 0;
 
 void fillArrayWithRandomNumbers(int * array, int minNumber, int maxNumber){
     srand(time(NULL));
 
-    for(long long int i =0;i<QUANTITY_IN_DATASET;i++){
-        array[i] = rand() %(maxNumber*10) + minNumber;
+    int minimalValueInDataset = 1;
+    int maximalValueInDataset = 10000000;
+    int quantityOfDataset = 5000000;
+
+    for(unsigned long int i =0;i<QUANTITY_IN_DATASET;i++){
+        int random = rand();
+        array[i] = (abs(random)+minNumber)%maxNumber;
     }
 }
 
 int sumDigitsInNumber(int number){
-    int sum = 0;
+    unsigned long sum = 0;
     while(number!=0){
         sum+=number%10;
         number/=10;
@@ -35,10 +40,11 @@ int main(int argc, char **argv) {
     int dataset[QUANTITY_IN_DATASET];
     float resultToSend, resultToReceive;
 
-    long long int  minNumber,  maxNumber, minSumOfDigits;
-    minNumber=0;
-    maxNumber=1000;
-    minSumOfDigits=0;
+    int  minNumber,  maxNumber, minSumOfDigits;
+    minNumber=1000;
+    maxNumber=2000000;
+    minSumOfDigits=15;
+
 
     double start, end;
 
@@ -72,8 +78,7 @@ int main(int argc, char **argv) {
         end = MPI_Wtime();
 
 
-        printf("Czas realizacji dla %d watkow : %f\n",plotsAmount, end-start);
-        printf("Wynik działania dla przedziału <%lld,%lld> o minimalnej sumie liczb %lld: %f\n",minNumber, maxNumber,minSumOfDigits,resultFromAllPlots);
+        printf("ForGrep%f\n", (end-start)/1000);
     } else {
         long long int plotSize = ceil(QUANTITY_IN_DATASET/(plotsAmount-1));
         long long int sumInPlot = 0;
